@@ -1,0 +1,12 @@
+-----------------The field update ---------------------------------
+
+(.venv) PS D:\InternShipWork\Django\tasks> py manage.py makemigrations
+Migrations for 'api':
+  api\migrations\0002_task_status.py
+    + Add field status to task
+(.venv) PS D:\InternShipWork\Django\tasks> py manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, api, auth, contenttypes, sessions
+Running migrations:
+  Applying api.0002_task_status... OK
+(.venv) PS D:\InternShipWork\Django\tasks> 

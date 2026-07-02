@@ -1,0 +1,10 @@
+
+Get: This is the type of request in rest api structure in which we make request for data.
+
+Post: This is the type of request in rest api structure in which we make request to sent the data to the server.
+
+Update:This is the type of request in rest api structure in which we make update the state of the field or row in the database.
+
+Put: This is also considered in update request but in partially upate the fields and data in the database.
+
+Delete: This is the type of request in rest api structure in which we make request for the delete of the data.

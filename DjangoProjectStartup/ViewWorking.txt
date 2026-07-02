@@ -1,0 +1,10 @@
+
+
+-------------------Views Working In Django--------------------------------------
+
+
+1. User request from the server using the urls
+2. The urls is recieved at the project main folder
+3. There the request is forward to the related app path.
+4. Then the urls is pass throught the app path lists.
+5. These it went to the reqiured lists item and go to that function , where request would be processed and return the response in json format.

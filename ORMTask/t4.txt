@@ -1,0 +1,21 @@
+
+
+
+
+(.venv) PS D:\InternShipWork\Django\tasks> py manage.py shell
+14 objects imported automatically (use -v 2 for details).
+
+Python 3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from api.models import Project , Task 
+>>> allProject = Project.objects.all()
+>>> print(allProject)
+<QuerySet [<Project: E commerce>, <Project: Weather app>]>
+>>> project = Project.objects.get(id=1)
+>>> print(project)
+E commerce
+>>> task = Task.objects.all()
+>>> print(task)
+<QuerySet [<Task: Build Frontend>, <Task: Setup>]>
+>>> 

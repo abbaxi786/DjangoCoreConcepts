@@ -1,0 +1,14 @@
+
+
+Path Parameter: This is the type of parameter in request that us used to give some values in the url or route last path so give some meta data, to get the data. 
+It is mostly used with get and delete requests.
+
+For Example 
+Get /product/6
+Delete /product/8
+
+Query Parameter: This is the type of request contains flexible about of parameter to request some specific about of data.
+It is used in filter,or forms.
+
+For Example
+Get /product/?category=food&type=organic

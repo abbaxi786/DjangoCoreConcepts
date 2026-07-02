@@ -1,0 +1,13 @@
+
+
+----------------Here are the step to register app in django--------------------------
+
+1. Type the 
+        PS D:\InternShipWork\Django\tasks> py manage.py startapp api
+        (.venv) PS D:\InternShipWork\Django\tasks> (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& d:\InternShipWork\Django\.venv\Scripts\Activate.ps1)
+        (.venv) PS D:\InternShipWork\Django\tasks> 
+
+This is would create the api file in the tasks mainfolder
+
+
+

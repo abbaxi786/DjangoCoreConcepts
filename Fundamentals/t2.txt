@@ -1,0 +1,7 @@
+------------ Status Code--------------------
+
+200: This is the status code used to tell that the request had been fullfilled, mostly used in get request.
+201: This is the status code use to tell that the request to make had been fullfilled, it is mostly used in delete,post and update and put request.
+400: This is the status code used to tell that the request is bad, or its is not according to the structure of api.
+404: This is the status code used to tell that the given resource is not found.
+500: This is the status code used to tell about the server error, that there is some issue with server.

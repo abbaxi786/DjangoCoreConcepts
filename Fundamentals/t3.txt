@@ -1,0 +1,32 @@
+
+
+Test for the api json place holder todo 
+
+Request Get 
+
+        URL:   https://jsonplaceholder.typicode.com/todos/1
+
+        Response:
+        {
+            "userId": 1,
+            "id": 1,
+            "title": "delectus aut autem",
+            "completed": false
+        }
+
+    
+Request Post: 
+
+    URL: https://jsonplaceholder.typicode.com/posts
+
+    Body:
+    {
+    "title": "foo",
+    "body": "bar",
+    "userId": 60,
+    }
+    
+    Response:
+    {
+    "id": 101
+    }

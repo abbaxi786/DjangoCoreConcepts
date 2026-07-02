@@ -1,0 +1,7 @@
+
+
+What is the stateless api? 
+
+:The stateless api is the api that don't store the previous request data and sessions.
+
+The example of stateless api is weather app api, quote generator api etc

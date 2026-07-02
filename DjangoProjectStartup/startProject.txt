@@ -1,0 +1,23 @@
+
+For the Envirnment of the python to separate it form the global Envirnment to avoid contradiciton we use 
+these command 
+
+1. Opened the file and go to the terminal
+PS D:\InternShipWork\Django> 
+
+2. Type             PS D:\InternShipWork\Django> py -m venv .venv 
+This would create the .venv file for packages
+
+3. Third to active it type .venv/Scripts/activate
+
+4. This would activate the Envirnment add the (.venv) D:\InternShipWork\Django>
+
+
+--------------Steps to make the django project -------------------------
+
+1. Type the command 
+        pip install django
+2. Type the command to install the django setup
+        (.venv) PS D:\InternShipWork\Django> django-admin startproject tasks    
+        (.venv) PS D:\InternShipWork\Django> 
+    This would make the project files setup

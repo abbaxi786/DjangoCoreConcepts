@@ -1,0 +1,10 @@
+
+---------------Return the Hello view through api folder-------------------------
+
+
+1. First make the views.py file in the api app 
+2. Add the py function of Home that return the jsonresponse from the django.http 
+3. Make the urlpatern list where you add the path import from the django.urls 
+4. Add the url in the urls file of tasks folder and register the api urls in it by using the include 
+5. Now run the server and add your reqiured path to the server url.
+6. This would return you message.
