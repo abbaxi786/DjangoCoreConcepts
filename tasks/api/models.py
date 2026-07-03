@@ -1,10 +1,8 @@
 from django.db import models
-from rest_framework import serializers
-
 # Create your models here.
 
 class Project(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,blank=True)
     description = models.TextField()
 
     def __str__(self):
