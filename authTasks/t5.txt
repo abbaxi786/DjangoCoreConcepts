@@ -1,0 +1,31 @@
+
+
+
+
+POST http://127.0.0.1:8000/api/login/
+
+{
+    "username":"Bassam_Tahir",
+    "password":"123456"
+}
+
+Response:
+    {
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzk0ODM5MSwiaWF0IjoxNzgzMzQzNTkxLCJqdGkiOiI2MjM2NDFhMDhiMTY0MGYyOTQ5NjQ5ZmQ4NDA0ZGE2OSIsInVzZXJfaWQiOiIyIn0.XvkwGkf1l9LfBaHMF6NLhmkidt07nuTBNeFB9Xbq8mA",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgzMzQ0NDkxLCJpYXQiOjE3ODMzNDM1OTEsImp0aSI6ImMwZjI2MmZiZWRhMDQxMjI5MGRiNDc1ODI0MTYyYTA5IiwidXNlcl9pZCI6IjIifQ.aMF0IppbAsgVugdp2o9Eo9qFJwd2B65YLjQYzjm6y2I"
+    }
+
+To Refresh the token after expiry:
+
+POST http://127.0.0.1:8000/api/login/refresh/
+
+body:
+{
+    "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzk0ODM5MSwiaWF0IjoxNzgzMzQzNTkxLCJqdGkiOiI2MjM2NDFhMDhiMTY0MGYyOTQ5NjQ5ZmQ4NDA0ZGE2OSIsInVzZXJfaWQiOiIyIn0.XvkwGkf1l9LfBaHMF6NLhmkidt07nuTBNeFB9Xbq8mA"
+}
+
+Response:
+{
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgzMzQ0NjcwLCJpYXQiOjE3ODMzNDM3NzAsImp0aSI6IjIwMTM3OThjMzM2MzQwNWRhMTQ0ZDM2NzQ0YWFjNmY2IiwidXNlcl9pZCI6IjIifQ.9SFoMza8Wm5n8MxukVeQ8eHvd5AXMhfDwFZG1gxWa4s"
+}
+

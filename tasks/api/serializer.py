@@ -8,10 +8,12 @@ class ProjectSerilizers(serializers.ModelSerializer):
         model = Project
         fields = '__all__' 
 
-    def validate_name(self, data):
-        if not data or data.strip()== "":
-            raise serializers.ValidationError({"description": "Can't set the name empty"})
-        pass
+    def validate_name(self, value):
+        if not value or value.strip() == "":
+            raise serializers.ValidationError(
+                "Name can't be empty."
+            )
+        return value    
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

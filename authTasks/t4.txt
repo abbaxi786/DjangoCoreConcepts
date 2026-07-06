@@ -1,0 +1,10 @@
+
+
+Text A endpoint without the tokens or bearer tokens
+
+GET http://127.0.0.1:8000/api/
+
+Status Code : 401 Authorized
+
+Message:
+    {"detail":"Authentication credentials were not provided."}
