@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 
@@ -16,4 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password']
         )
+        employee_group = Group.objects.get(name="Employee")
+        user.groups.add(employee_group)
         return user

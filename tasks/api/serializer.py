@@ -20,3 +20,7 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = "__all__"
     pass
+    def validate_assigned_to(self, value):
+        if value == "Admins" or value == "Managers":
+            raise serializers.ValidationError("Assigned user cannot be an Admin or Manager.")
+        return value

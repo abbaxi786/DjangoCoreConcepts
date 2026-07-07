@@ -1,0 +1,237 @@
+
+
+1. Register Company A
+
+API
+
+POST /api/register/company/
+
+Body
+
+
+{
+    "company_name": "ABC Software",
+    "description": "Software Development Company",
+    "username": "Faisal",
+    "email": "faisal@gmail.com",
+    "password": "12345678"
+}
+
+
+Response
+
+
+{
+    "message": "Company created successfully.",
+    "company": "ABC Software"
+}
+
+
+Creates the first company along with its owner account.
+
+
+
+2. Register Company B
+
+API
+
+POST /api/register/company/
+
+Body
+
+
+{
+    "company_name": "Consultency Software",
+    "description": "Fazal Consultents Company",
+    "username": "Fazal",
+    "email": "fazal65@gmail.com",
+    "password": "12345678"
+}
+
+
+Response
+
+
+{
+    "message": "Company created successfully.",
+    "company": "Consultency Software"
+}
+
+
+Creates a second company with a different owner.
+
+
+
+3. Login as Faisal
+
+API
+
+POST /api/login/
+
+Body
+
+
+{
+    "username": "Faisal",
+    "password": "12345678"
+}
+
+
+Response
+
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NDAxMTYyMCwiaWF0IjoxNzgzNDA2ODIwLCJqdGkiOiI0YmVlMmU4MGJkMjQ0ZjZkYWU0ZTFhZGUwMDkzMzJjOCIsInVzZXJfaWQiOiI4In0.OP5ofUx1ywmkfsMUmX41yeX9pTBY2XavOseDv1xL0lc",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgzNDA3NzIwLCJpYXQiOjE3ODM0MDY4MjAsImp0aSI6IjFlYzRhZGNhN2NkYzRmYzQ4ZTAyMjk4Yjk5OTMwNWRmIiwidXNlcl9pZCI6IjgifQ.uvAF0261odE2TqydPo0-jLL5iQybBwxcqscyBIQaRlg"
+}
+
+
+Generates JWT tokens for authenticated requests.
+
+
+
+4. Login as Fazal
+
+API
+
+POST /api/login/
+
+Body
+
+
+{
+    "username": "Fazal",
+    "password": "12345678"
+}
+
+
+Response
+
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NDAxMTYyMCwiaWF0IjoxNzgzNDA2ODIwLCJqdGkiOiI0YmVlMmU4MGJkMjQ0ZjZkYWU0ZTFhZGUwMDkzMzJjOCIsInVzZXJfaWQiOiI4In0.OP5ofUx1ywmkfsMUmX41yeX9pTBY2XavOseDv1xL0lc",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgzNDA3NzIwLCJpYXQiOjE3ODM0MDY4MjAsImp0aSI6IjFlYzRhZGNhN2NkYzRmYzQ4ZTAyMjk4Yjk5OTMwNWRmIiwidXNlcl9pZCI6IjgifQ.uvAF0261odE2TqydPo0-jLL5iQybBwxcqscyBIQaRlg"
+}
+
+
+Generates JWT tokens for the second company user.
+
+
+
+5. Create Project (Faisal)
+
+API
+
+POST /api/
+
+Body
+
+
+{
+    "name": "Hospital Management System",
+    "description": "Manage doctors and patients"
+}
+
+
+
+
+
+{
+    "id": 1,
+    "name": "Hospital Management System",
+    "description": "Manage doctors and patients",
+    "company": 3
+}
+
+
+Creates a project for ABC Software.
+
+
+
+6. Create Another Project (Faisal)
+
+API
+
+POST /api/
+
+Body
+
+
+{
+    "name": "Inventory System",
+    "description": "Inventory management for medicines"
+}
+
+
+Response
+
+{
+    "id": 2,
+    "name": "Inventory System",
+    "description": "Inventory management for medicines",
+    "company": 3
+}
+
+
+Adds another project to the same company.
+
+
+
+7. Get All Projects (Faisal)
+
+API
+
+GET /api/
+
+Response
+
+
+[
+    {
+        "id": 1,
+        "name": "Hospital Management System",
+        "description": "Manage doctors and patients",
+        "company": 3
+    },
+    {
+        "id": 2,
+        "name": "Inventory System",
+        "description": "Inventory management for medicines",
+        "company": 3
+    }
+]
+
+
+Confirms that Faisal can view all projects belonging to his company.
+
+
+
+8. Get All Projects (Fazal)
+
+ API
+
+GET /api/
+
+Response
+
+[]
+
+
+Verifies that Fazal cannot view projects belonging to ABC Software.
+
+
+
+9. Access Another Company's Project
+
+API
+
+GET /api_project/1
+
+Response
+
+{
+    "detail": "No Project matches the given query."
+}
+
+
+Confirms that users cannot access a project owned by another company, even if they know its ID.
