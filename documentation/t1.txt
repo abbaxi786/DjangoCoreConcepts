@@ -1,0 +1,58 @@
+POST http://127.0.0.1:8000/api/register/company/
+
+Body
+{
+    "company_name": "ABC Software",
+    "description": "Software Development Company",
+    "username": "Faisal",
+    "email": "faisal@gmail.com",
+    "password": "12345678"
+}
+
+Response
+
+{
+    "message": "Company created successfully.",
+    "company": {
+        "company_name": "ABC Software",
+        "description": "Software Development Company",
+        "username": "Faisal",
+        "email": "faisal@gmail.com"
+    }
+}
+
+Post POST http://127.0.0.1:8000/api/register/company/
+
+Body
+
+{
+    "company_name": "Consultency Company",
+    "description": "Consultancy Company for solutions",
+    "username": "Fazal",
+    "email": "fazal65@gmail.com",
+    "password": "12345678"
+}
+
+Response
+{
+    "message": "Company created successfully.",
+    "company": {
+        "company_name": "Consultency Software",
+        "description": "Consultancy Company",
+        "username": "Fazal",
+        "email": "fazal65@gmail.com"
+    }
+}
+
+POST http://127.0.0.1:8000/api/login/
+
+Body
+{
+    "username": "Faisal",
+    "password": "12345678"
+}
+Response
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NjA4NjgzMCwiaWF0IjoxNzgzNDk0ODMwLCJqdGkiOiIxODkwOTQ2YmJjNjc0ZWU0YWU2NmYyNmRiOTMxNWY1NyIsInVzZXJfaWQiOiI1In0.Z8z-wwOTx4LkYOLT0lYp0biGKtAMKAsLg97hY5D5y1s",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg0MDk5NjMwLCJpYXQiOjE3ODM0OTQ4MzAsImp0aSI6IjcxNmJhOWRhOWVhMzQzZDFiNWM3YzMxYmQyYWMzYWM5IiwidXNlcl9pZCI6IjUifQ.R6bRT47KUNdXaowZy4r1MWmTy50J-X0k4xEdXROrzQU"
+}
