@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import TaskSerializer
+from .auditLog.auditModel import AuditLog
 
 
 @api_view(["GET", "POST"])
@@ -30,6 +31,12 @@ def Tasks(request):
 
         if serializer.is_valid():
             serializer.save(project=project)
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.CREATE,
+                model_name="Task",
+                object_id=serializer.id
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -57,6 +64,13 @@ def TaskManupulate(request, id):
 
         if serializer.is_valid():
             serializer.save()
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.UPDATE,
+                model_name="Task",
+                object_id=serializer.id
+            )
+
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -71,11 +85,24 @@ def TaskManupulate(request, id):
 
         if serializer.is_valid():
             serializer.save()
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.UPDATE,
+                model_name="Task",
+                object_id=serializer.id
+            )
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == "DELETE":
 
-        task.delete()
+        task.is_deleted = True
+        task.save()
+        AuditLog.objects.create(
+            user=request.user,
+            action=AuditLog.Action.DELETE,
+            model_name="Task",
+            object_id=task.id
+        )
         return Response(status=status.HTTP_204_NO_CONTENT)
