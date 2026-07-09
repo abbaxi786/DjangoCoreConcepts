@@ -15,31 +15,50 @@ def Tasks(request):
     company = request.user.profile.company
 
     if request.method == "GET":
-        tasks = Task.objects.filter(project__company=company)
+
+        tasks = Task.objects.filter(
+            project__company=company,
+            is_deleted=False
+        )
+
         serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
 
     elif request.method == "POST":
 
         project = get_object_or_404(
             Project,
             id=request.data["project"],
-            company=company
+            company=company,
+            is_deleted=False
         )
 
         serializer = TaskSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save(project=project)
+
+            task = serializer.save(project=project)
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.CREATE,
                 model_name="Task",
-                object_id=serializer.id
+                object_id=task.id
             )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
@@ -51,29 +70,46 @@ def TaskManupulate(request, id):
     task = get_object_or_404(
         Task,
         id=id,
-        project__company=company
+        project__company=company,
+        is_deleted=False
     )
 
     if request.method == "GET":
+
         serializer = TaskSerializer(task)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
 
     elif request.method == "PUT":
 
-        serializer = TaskSerializer(task, data=request.data)
+        serializer = TaskSerializer(
+            task,
+            data=request.data
+        )
 
         if serializer.is_valid():
-            serializer.save()
+
+            task = serializer.save()
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.UPDATE,
                 model_name="Task",
-                object_id=serializer.id
+                object_id=task.id
             )
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     elif request.method == "PATCH":
 
@@ -84,25 +120,39 @@ def TaskManupulate(request, id):
         )
 
         if serializer.is_valid():
-            serializer.save()
+
+            task = serializer.save()
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.UPDATE,
                 model_name="Task",
-                object_id=serializer.id
+                object_id=task.id
             )
-            return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     elif request.method == "DELETE":
 
         task.is_deleted = True
         task.save()
+
         AuditLog.objects.create(
             user=request.user,
             action=AuditLog.Action.DELETE,
             model_name="Task",
             object_id=task.id
         )
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(
+            {"message": "Task deleted successfully."},
+            status=status.HTTP_202_ACCEPTED
+        )

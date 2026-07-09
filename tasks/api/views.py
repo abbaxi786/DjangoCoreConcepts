@@ -17,22 +17,30 @@ def Home(request):
     company = request.user.profile.company
 
     if request.method == "GET":
-        projects = Project.objects.filter(company=company,is_deleted=False)
+
+        projects = Project.objects.filter(
+            company=company,
+            is_deleted=False
+        )
 
         serializer = ProjectSerilizers(projects, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
 
     elif request.method == "POST":
 
         if not request.user.groups.filter(name__in=["Manager", "Admin"]).exists():
 
-            audit_log = AuditLog.objects.create(
+            AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.UNAUTHORIZED_ACCESS,
                 model_name="Project",
                 object_id=None
             )
+
             return Response(
                 {"message": "Only Manager and Admin can create projects."},
                 status=status.HTTP_403_FORBIDDEN
@@ -42,12 +50,13 @@ def Home(request):
 
         if serializer.is_valid():
 
-            serializer.save(company=company)
+            project = serializer.save(company=company)
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.CREATE,
                 model_name="Project",
-                object_id=serializer.id
+                object_id=project.id
             )
 
             return Response(
@@ -63,7 +72,7 @@ def Home(request):
 
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
 @permission_classes([IsAuthenticated])
-@CheckUserGroup(["Manager", "Admin","Employee"])
+@CheckUserGroup(["Manager", "Admin", "Employee"])
 def HomeChange(request, id):
 
     company = request.user.profile.company
@@ -88,6 +97,13 @@ def HomeChange(request, id):
 
         if not request.user.groups.filter(name="Admin").exists():
 
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.UNAUTHORIZED_ACCESS,
+                model_name="Project",
+                object_id=project.id
+            )
+
             return Response(
                 {"message": "Only Admin can update projects."},
                 status=status.HTTP_403_FORBIDDEN
@@ -100,12 +116,13 @@ def HomeChange(request, id):
 
         if serializer.is_valid():
 
-            serializer.save()
+            project = serializer.save()
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.UPDATE,
                 model_name="Project",
-                object_id=serializer.id
+                object_id=project.id
             )
 
             return Response(
@@ -122,6 +139,13 @@ def HomeChange(request, id):
 
         if not request.user.groups.filter(name="Admin").exists():
 
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.UNAUTHORIZED_ACCESS,
+                model_name="Project",
+                object_id=project.id
+            )
+
             return Response(
                 {"message": "Only Admin can update projects."},
                 status=status.HTTP_403_FORBIDDEN
@@ -135,12 +159,13 @@ def HomeChange(request, id):
 
         if serializer.is_valid():
 
-            serializer.save()
+            project = serializer.save()
+
             AuditLog.objects.create(
                 user=request.user,
                 action=AuditLog.Action.UPDATE,
                 model_name="Project",
-                object_id=serializer.id
+                object_id=project.id
             )
 
             return Response(
@@ -157,19 +182,27 @@ def HomeChange(request, id):
 
         if not request.user.groups.filter(name="Admin").exists():
 
+            AuditLog.objects.create(
+                user=request.user,
+                action=AuditLog.Action.UNAUTHORIZED_ACCESS,
+                model_name="Project",
+                object_id=project.id
+            )
+
             return Response(
                 {"message": "Only Admin can delete projects."},
                 status=status.HTTP_403_FORBIDDEN
             )
+
         project.is_deleted = True
         project.save()
 
         AuditLog.objects.create(
-                user=request.user,
-                action=AuditLog.Action.DELETE,
-                model_name="Project",
-                object_id=serializer.id
-            )
+            user=request.user,
+            action=AuditLog.Action.DELETE,
+            model_name="Project",
+            object_id=project.id
+        )
 
         return Response(
             {"message": "Project deleted successfully."},

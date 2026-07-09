@@ -1,3 +1,8 @@
+In this test resport I would create two user and make one user to access to another user and 
+through admin that make the user create an employee then the employee then login our system to 
+check if the system if working 
+
+
 POST http://127.0.0.1:8000/api/register/company/
 
 Body
@@ -20,6 +25,9 @@ Response
         "email": "faisal@gmail.com"
     }
 }
+
+
+Second user
 
 Post POST http://127.0.0.1:8000/api/register/company/
 
@@ -44,6 +52,8 @@ Response
     }
 }
 
+Signed in as the first user
+
 POST http://127.0.0.1:8000/api/login/
 
 Body
@@ -56,3 +66,475 @@ Response
     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NjA4NjgzMCwiaWF0IjoxNzgzNDk0ODMwLCJqdGkiOiIxODkwOTQ2YmJjNjc0ZWU0YWU2NmYyNmRiOTMxNWY1NyIsInVzZXJfaWQiOiI1In0.Z8z-wwOTx4LkYOLT0lYp0biGKtAMKAsLg97hY5D5y1s",
     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg0MDk5NjMwLCJpYXQiOjE3ODM0OTQ4MzAsImp0aSI6IjcxNmJhOWRhOWVhMzQzZDFiNWM3YzMxYmQyYWMzYWM5IiwidXNlcl9pZCI6IjUifQ.R6bRT47KUNdXaowZy4r1MWmTy50J-X0k4xEdXROrzQU"
 }
+
+
+POST http://127.0.0.1:8000/api/
+
+Body
+{
+    "name": "Hospital Management System",
+    "description": "Manage doctors and patients",
+    "company": 4
+}
+
+Response
+
+{
+    "id": 1
+    "name": "Hospital Management System",
+    "description": "Manage doctors and patients",
+    "company": 4,
+    "is_deleted": false
+}
+
+Post http://127.0.0.1:8000/api/
+
+Body
+{
+    "name": "Inventory System",
+    "description": "Medicine inventory",
+    "company": 4
+}
+
+Response
+
+{
+    "id": 2
+    "name": "Inventory System",
+    "description": "Medicine inventory",
+    "company": 4,
+    "is_deleted": false
+}
+
+GET  http://127.0.0.1:8000/api/
+
+Response 
+[
+    {
+        "id": 1,
+        "name": "Hospital Management System",
+        "description": "Manage doctors and patients",
+        "is_deleted": false,
+        "company": 4
+    },
+    {
+        "id": 2,
+        "name": "Inventory System",
+        "description": "Medicine inventory",
+        "is_deleted": false,
+        "company": 4
+    }
+]
+
+GET http://127.0.0.1:8000/api_project/1
+
+Response 
+
+{
+    "id": 1,
+    "name": "Hospital Management System",
+    "description": "Manage doctors and patients",
+    "is_deleted": false,
+    "company": 4
+}
+
+Put http://127.0.0.1:8000/api_project/1
+
+Body
+{
+    "name": "Hospital Management System Updated 2",
+    "description": "Updated description for second time",
+    "company": 4
+}
+
+Response
+{
+    "id": 1,
+    "name": "Hospital Management System Updated 2",
+    "description": "Updated description for second time",
+    "is_deleted": false,
+    "company": 4
+}
+
+PATCH http://127.0.0.1:8000/api_project/1
+
+Body
+{
+    "description": "Only description updated"
+}
+Response
+
+{
+    "id": 1,
+    "name": "Hospital Management System Updated 2",
+    "description": "Only description updated",
+    "is_deleted": false,
+    "company": 4
+}
+
+Login As the fazal
+
+POST http://127.0.0.1:8000/api/login/
+
+Body 
+{
+    "username": "Fazal",
+    "password": "12345678"
+}
+
+Response
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NjE5MjgyMCwiaWF0IjoxNzgzNjAwODIwLCJqdGkiOiJlYzUzZWJlYzU2MDM0MTYzYmUzMTRiN2FkNjFhNTIxNyIsInVzZXJfaWQiOiI2In0.WI88MuZ_ntL5hNHesVR6sCWGqgFTxXaSbOWFLMwgsrI",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg0MjA1NjIwLCJpYXQiOjE3ODM2MDA4MjAsImp0aSI6IjY3M2MwMTgwZDc0NDQ4YmI4ZWZhNjA2YWM5ZmNmMzhkIiwidXNlcl9pZCI6IjYifQ.EQrlWaP9OqVf1x-eOOq3xeieT-1xCFNtvrujnNYw9ag"
+}
+
+Get GET http://127.0.0.1:8000/api/
+
+Response
+[]
+
+Accessing the Faisal data 
+
+Get http://127.0.0.1:8000/api_project/1
+
+Response 
+{
+    "detail": "No Project matches the given query."
+}
+
+POST http://127.0.0.1:8000/api/
+
+Body
+{
+    "id": 3,
+    "name": "CRM System",
+    "description": "Customer relationship management",
+    "is_deleted": false,
+    "company": 5
+}
+
+Response
+{
+    "id": 3,
+    "name": "CRM System",
+    "description": "Customer relationship management",
+    "is_deleted": false,
+    "company": 5
+}
+
+GET http://127.0.0.1:8000/api/
+
+Response
+[
+    {
+        "id": 3,
+        "name": "CRM System",
+        "description": "Customer relationship management",
+        "is_deleted": false,
+        "company": 5
+    }
+]
+Accessing the user 1 company projects 
+POST http://127.0.0.1:8000/api/tasks/
+
+Body
+{
+    "project": 1,
+    "name": "Design Database",
+    "description": "Create database schema",
+    "due_date": "2026-07-20",
+    "status": "PENDING",
+    "completed": false,
+    "assigned_to": 1
+}
+
+Response
+{
+    "detail": "No Project matches the given query."
+}
+
+Now access out project 
+POST http://127.0.0.1:8000/api/tasks/
+
+Body
+{
+    "project": 1,
+    "name": "Design Database",
+    "description": "Create database schema",
+    "due_date": "2026-07-20",
+    "status": "PENDING",
+    "completed": false,
+    "assigned_to": 1
+}
+Response
+{
+    "id": 1,
+    "name": "Design Database",
+    "description": "Create database schema",
+    "due_date": "2026-07-20",
+    "is_deleted": false,
+    "status": "PENDING",
+    "completed": false,
+    "project": 3,
+    "assigned_to": null
+}
+
+POST http://127.0.0.1:8000/api/tasks/
+
+Body
+{
+    "project": 3,
+    "name": "Develop REST APIs",
+    "description": "Implement CRUD APIs for projects and tasks",
+    "due_date": "2026-07-25",
+    "status": "IN_PROGRESS",
+    "completed": false,
+    "assigned_to": null
+}
+
+Response
+{
+    "id": 2,
+    "name": "Develop REST APIs",
+    "description": "Implement CRUD APIs for projects and tasks",
+    "due_date": "2026-07-25",
+    "is_deleted": false,
+    "status": "IN_PROGRESS",
+    "completed": false,
+    "project": 3,
+    "assigned_to": null
+}
+
+POST http://127.0.0.1:8000/api/tasks/
+
+Body
+{
+    "project": 3,
+    "name": "Frontend Integration",
+    "description": "Connect React frontend with Django APIs",
+    "due_date": "2026-07-30",
+    "status": "PENDING",
+    "completed": false,
+    "assigned_to": null
+}
+
+Response
+{
+    "id": 3,
+    "name": "Frontend Integration",
+    "description": "Connect React frontend with Django APIs",
+    "due_date": "2026-07-30",
+    "is_deleted": false,
+    "status": "PENDING",
+    "completed": false,
+    "project": 3,
+    "assigned_to": null
+}
+
+GET http://127.0.0.1:8000/api/tasks/
+
+Response
+[
+    {
+        "id": 1,
+        "name": "Design Database",
+        "description": "Create database schema",
+        "due_date": "2026-07-20",
+        "is_deleted": false,
+        "status": "PENDING",
+        "completed": false,
+        "project": 3,
+        "assigned_to": null
+    },
+    {
+        "id": 2,
+        "name": "Develop REST APIs",
+        "description": "Implement CRUD APIs for projects and tasks",
+        "due_date": "2026-07-25",
+        "is_deleted": false,
+        "status": "IN_PROGRESS",
+        "completed": false,
+        "project": 3,
+        "assigned_to": null
+    },
+    {
+        "id": 3,
+        "name": "Frontend Integration",
+        "description": "Connect React frontend with Django APIs",
+        "due_date": "2026-07-30",
+        "is_deleted": false,
+        "status": "PENDING",
+        "completed": false,
+        "project": 3,
+        "assigned_to": null
+    }
+]
+
+GET http://127.0.0.1:8000/api/task/1
+
+Response
+{
+    "id": 1,
+    "name": "Design Database",
+    "description": "Create database schema",
+    "due_date": "2026-07-20",
+    "is_deleted": false,
+    "status": "PENDING",
+    "completed": false,
+    "project": 3,
+    "assigned_to": null
+}
+
+PATCH http://127.0.0.1:8000/api/task/1
+
+Body
+
+{
+    "status": "COMPLETED",
+    "completed": true
+}
+
+
+Response
+{
+    "id": 1,
+    "name": "Design Database",
+    "description": "Create database schema",
+    "due_date": "2026-07-20",
+    "is_deleted": false,
+    "status": "COMPLETED",
+    "completed": true,
+    "project": 3,
+    "assigned_to": null
+}
+
+DELETE http://127.0.0.1:8000/api/task/1
+
+Response 
+
+204  No Content
+
+GET http://127.0.0.1:8000/api/task/1
+
+Response
+{
+    "detail": "No Task matches the given query."
+}
+
+Company Isolation Test 
+
+I would logged in as the Faisal now 
+
+Now getting the value from the project 2
+
+GET http://127.0.0.1:8000/api/tasks/
+
+Response
+
+[]
+
+Registering the employee as the admin 
+
+
+POST http://127.0.0.1:8000/api/register/
+
+Body
+
+{
+    "username": "Ali",
+    "email": "ali@gmail.com",
+    "password": "12345678"
+}
+
+Response
+
+{
+    "data": {
+        "id": 7,
+        "username": "Ali",
+        "email": "ali@gmail.com"
+    },
+    "message": "User registered successfully"
+}
+
+After running it in shell to check if the employee is created
+
+>>> from django.contrib.auth.models import User
+>>> 
+>>> user = User.objects.get(username="Ali")
+>>> 
+>>> print(user.groups.all())
+<QuerySet [<Group: Employee>]>
+>>> print(user.groups.all())                   
+<QuerySet [<Group: Employee>]>
+>>> print(user)
+Ali
+>>> 
+
+Now Login as the Employee 
+
+POST http://127.0.0.1:8000/api/login/
+
+Body
+{
+    "username": "Ali",
+    "password": "12345678"
+}
+Response
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4NjE5OTgzNiwiaWF0IjoxNzgzNjA3ODM2LCJqdGkiOiI4YTg0Njc1ZDliMzI0NDBhYWRjMTg4ZDMwYjczNmEwNCIsInVzZXJfaWQiOiI3In0.Ocd8Soi6_FmRiUHjayk_K7KuZ545ABrZ5FJ3fvcpbeY",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg0MjEyNjM2LCJpYXQiOjE3ODM2MDc4MzYsImp0aSI6IjIxZGY2ZWM3NDIyYTQ4NDBiNTNjNGMxNjM3ZjE2ODZlIiwidXNlcl9pZCI6IjcifQ.S6392WIXkZzKJOZ9oz0MgLSlwtV4NN20ImMCU0WuFZs"
+}
+
+
+Now check the permission to the users 
+
+
+GET http://127.0.0.1:8000/api/
+
+Response
+[
+    {
+        "id": 1,
+        "name": "Hospital Management System Updated 2",
+        "description": "Only description updated",
+        "is_deleted": false,
+        "company": 4
+    },
+    {
+        "id": 2,
+        "name": "Inventory System",
+        "description": "Medicine inventory",
+        "is_deleted": false,
+        "company": 4
+    }
+]
+
+Now Checking if the employee can creat project 
+
+POST http://127.0.0.1:8000/api/
+
+Body
+{
+    "name": "Payroll System",
+    "description": "Manage salaries",
+    "company": 4
+}
+
+Response
+{
+    "message": "Only Manager and Admin can create projects."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework import response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from .user_serializer import UserSerializer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -11,8 +12,9 @@ from api.email.sendEmail import send_welcome_email
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def Register(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = UserSerializer(data=request.data,context={'company': request.user.profile.company})
     if serializer.is_valid():
         serializer.save()
         t1 = threading.Thread(target=send_welcome_email, args=(serializer.data['email'], serializer.data['username']))
