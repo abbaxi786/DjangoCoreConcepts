@@ -6,7 +6,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .users.user_api import LoginView
-from api.company.company_api import register_company
+from api.company.company_api import register_company,get_companies
+
 
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
     path('api/register/', Register),
     path('api/login/', LoginView.as_view()),
     path('api/login/refresh/', TokenRefreshView.as_view()),    
-    path('api/register/company/', register_company)
+    path('api/register/company/', register_company),
+    path('api/company/<int:id>/', get_companies),
 ]

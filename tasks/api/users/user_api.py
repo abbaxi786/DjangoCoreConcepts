@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import (
 from rest_framework.throttling import AnonRateThrottle
 import threading
 from api.email.sendEmail import send_welcome_email
+from .return_user import LoginSerializer
 
 
 @api_view(['POST'])
@@ -28,4 +29,5 @@ class LoginThrottle(AnonRateThrottle):
 
 
 class LoginView(TokenObtainPairView):
+    serializer_class = LoginSerializer
     throttle_classes = [LoginThrottle]

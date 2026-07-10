@@ -20,11 +20,17 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "api",
+    "corsheaders",
+    "daphne",
+    "channels",
 ]
 
-MIDDLEWARE = [
+
+
+MIDDLEWARE = [    
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -50,6 +56,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "tasks.wsgi.application"
+ASGI_APPLICATION = "tasks.asgi.application"
 
 DATABASES = {
     "default": {
@@ -132,3 +139,9 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "abbasinabeelahmed58@gmail.com"
 EMAIL_HOST_PASSWORD = "nzwy vqtr llai nlim"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = False
