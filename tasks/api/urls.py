@@ -7,6 +7,8 @@ from rest_framework_simplejwt.views import (
 )
 from .users.user_api import LoginView
 from api.company.company_api import register_company,get_companies
+from api.WorkplaceRoute.workplace_api import WorkPlaceView,CheckWorkPlaceExist
+
 
 
 
@@ -20,4 +22,6 @@ urlpatterns = [
     path('api/login/refresh/', TokenRefreshView.as_view()),    
     path('api/register/company/', register_company),
     path('api/company/<int:id>/', get_companies),
+    path('api/workplace/create/<int:projectId>', WorkPlaceView),
+    path('api/workplace/check/<int:projectId>',CheckWorkPlaceExist)
 ]

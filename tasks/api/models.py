@@ -42,8 +42,8 @@ class Message(models.Model):
 
 class Board(models.Model):
     room_name = models.CharField()
-    board_content = models.TextField()
+    board_content = models.CharField()
 
 class WorkPlace(models.Model):
     room_name = models.CharField()
-    company = models.ForeignKey("Company", on_delete=models.CASCADE)
+    project = models.ForeignKey("Project", on_delete=models.CASCADE)
