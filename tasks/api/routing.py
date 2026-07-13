@@ -1,7 +1,8 @@
-# api/routing.py
-from django.urls import re_path
+from django.urls import path
 from .realtime.consumer import ChatConsumer
+from .realtime.public_board import BoardConsumer
 
 websocket_urlpatterns = [
-    re_path(r"ws/chat/$", ChatConsumer.as_asgi()),
+    path("ws/chat/<str:room_name>/", ChatConsumer.as_asgi()),
+    path("ws/board/<str:room_name>/", BoardConsumer.as_asgi()),
 ]

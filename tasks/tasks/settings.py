@@ -10,6 +10,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -21,7 +22,6 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "api",
     "corsheaders",
-    "daphne",
     "channels",
 ]
 
@@ -129,6 +129,15 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": (
         "rest_framework_simplejwt.tokens.AccessToken",
     ),
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
 
 # Email Configuration

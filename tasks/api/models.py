@@ -28,3 +28,22 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+
+class Message(models.Model):
+    room_name = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at"]
+
+class Board(models.Model):
+    room_name = models.CharField()
+    board_content = models.TextField()
+
+class WorkPlace(models.Model):
+    room_name = models.CharField()
+    company = models.ForeignKey("Company", on_delete=models.CASCADE)

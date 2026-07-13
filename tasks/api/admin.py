@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Project, Task
+from .models import Project, Task,Message
 from .company.company_model import Company, Profile
 from .auditLog.auditModel import AuditLog
+
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -32,4 +33,9 @@ admin.site.register(Company, CompanyAdmin)
 admin.site.register(Profile)
 admin.site.register(AuditLog)
 
-# Register your models here.
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ("id", "room_name", "username", "message", "created_at")
+admin.site.register(Message, MessageAdmin)
+
+
+
