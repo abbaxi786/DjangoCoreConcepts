@@ -47,3 +47,14 @@ class Board(models.Model):
 class WorkPlace(models.Model):
     room_name = models.CharField()
     project = models.ForeignKey("Project", on_delete=models.CASCADE)
+
+
+
+class Note(models.Model):
+    work_place = models.ForeignKey(
+        WorkPlace,
+        on_delete=models.CASCADE
+    )
+    username = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

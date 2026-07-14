@@ -1,5 +1,5 @@
 from channels.db import database_sync_to_async
-from ..models import Message,Board
+from ..models import Message,Board,Note,WorkPlace
 
 
 
@@ -37,4 +37,17 @@ def get_board(room_name):
     )
 
     return board.board_content
+
+@database_sync_to_async
+def SaveNotesWithUser(room_name, username, content):
+    workplace = WorkPlace.objects.get(room_name=room_name)
+
+    note = Note.objects.create(
+        work_place=workplace,
+        username=username,
+        content=content
+    )
+
+    return note
+        
 

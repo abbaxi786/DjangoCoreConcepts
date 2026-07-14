@@ -2,9 +2,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from ..models import WorkPlace,Project
+from ..models import WorkPlace,Project,Note
 from rest_framework.response import Response
-from .serializer import WorkPlaceSerializer
+from .serializer import WorkPlaceSerializer,NoteSerializer
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -40,6 +40,17 @@ def CheckWorkPlaceExist(request, projectId):
 
     return Response(exists)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def GetNoteOfWorkPlace(request, work_place_name):
+
+    history = Note.objects.filter(
+        work_place__room_name=work_place_name
+    ).order_by("-created_at")
+
+    serializer = NoteSerializer(history, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 

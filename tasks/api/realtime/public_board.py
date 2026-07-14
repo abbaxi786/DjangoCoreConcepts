@@ -1,7 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 
-from .fetch_message import get_board, save_board
+from .fetch_message import get_board, save_board,SaveNotesWithUser
 
 
 class BoardConsumer(AsyncWebsocketConsumer):
@@ -32,6 +32,13 @@ class BoardConsumer(AsyncWebsocketConsumer):
 
         await save_board(
             self.room_name,
+            board_content
+        )
+        username = data["username"]
+
+        await SaveNotesWithUser(
+            self.room_name,
+            username,
             board_content
         )
 

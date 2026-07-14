@@ -14,12 +14,16 @@ def Tasks(request):
 
     company = request.user.profile.company
 
+    print("This is company",company)
+
     if request.method == "GET":
 
         tasks = Task.objects.filter(
             project__company=company,
             is_deleted=False
         )
+
+        print("This is tasks: ",tasks)
 
         serializer = TaskSerializer(tasks, many=True)
 
@@ -156,3 +160,28 @@ def TaskManupulate(request, id):
             {"message": "Task deleted successfully."},
             status=status.HTTP_202_ACCEPTED
         )
+    
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def GetProjectTasks(request, project_id):
+
+    company = request.user.profile.company
+
+    project = get_object_or_404(
+        Project,
+        id=project_id,
+        company=company,
+        is_deleted=False
+    )
+
+    tasks = Task.objects.filter(
+        project=project,
+        is_deleted=False
+    )
+
+    serializer = TaskSerializer(tasks, many=True)
+
+    return Response(
+        serializer.data,
+        status=status.HTTP_200_OK
+    )
