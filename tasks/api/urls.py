@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 )
 from .users.user_api import LoginView
 from api.company.company_api import register_company,get_companies
-from api.WorkplaceRoute.workplace_api import WorkPlaceView,CheckWorkPlaceExist,GetNoteOfWorkPlace
+from api.WorkplaceRoute.workplace_api import WorkPlaceView,CheckWorkPlaceExist,GetNoteOfWorkPlace,GetWorkspaceFiles,UploadFile
 
 
 
@@ -25,5 +25,7 @@ urlpatterns = [
     path('api/company/<int:id>/', get_companies),
     path('api/workplace/create/<int:projectId>', WorkPlaceView),
     path('api/workplace/check/<int:projectId>',CheckWorkPlaceExist),
-    path('api/workplace/note/<str:work_place_name>',GetNoteOfWorkPlace)
+    path('api/workplace/note/<str:work_place_name>',GetNoteOfWorkPlace),
+    path("api/workplace/upload/<str:work_place_name>/",UploadFile),
+    path("api/workplace/files/<str:work_place_name>/",GetWorkspaceFiles),
 ]

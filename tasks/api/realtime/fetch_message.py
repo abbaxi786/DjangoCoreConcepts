@@ -49,5 +49,22 @@ def SaveNotesWithUser(room_name, username, content):
     )
 
     return note
+
+@database_sync_to_async
+def get_company_workplaces(room_name):
+
+    workplace = WorkPlace.objects.select_related(
+        "project__company"
+    ).get(room_name=room_name)
+
+    company = workplace.project.company
+
+    return list(
+        WorkPlace.objects.filter(
+            project__company=company
+        ).exclude(
+            room_name=room_name
+        )
+    )
         
 
