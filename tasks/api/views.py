@@ -46,11 +46,19 @@ def Home(request):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        serializer = ProjectSerilizers(data=request.data)
+        company = request.user.profile.company
+
+        # Make a mutable copy of the incoming data
+        data = request.data.copy()
+
+        # Add the company ID to the request data
+        data["company"] = company.id
+
+        serializer = ProjectSerilizers(data=data)
 
         if serializer.is_valid():
 
-            project = serializer.save(company=company)
+            project = serializer.save()
 
             AuditLog.objects.create(
                 user=request.user,
@@ -68,7 +76,6 @@ def Home(request):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
 @permission_classes([IsAuthenticated])
@@ -208,3 +215,16 @@ def HomeChange(request, id):
             {"message": "Project deleted successfully."},
             status=status.HTTP_204_NO_CONTENT
         )
+    
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def IsAdmin(request):
+
+    is_admin = request.user.groups.filter(name="Admin").exists()
+
+    return Response(
+        {
+            "is_admin": is_admin
+        },
+        status=status.HTTP_200_OK
+    )

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Task,Message,WorkPlace,Note
+from .models import Project, Task,Message,WorkPlace,Note,WorkspaceFile
 from .company.company_model import Company, Profile
 from .auditLog.auditModel import AuditLog
 
@@ -10,6 +10,12 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
+
+class FileAdmin(admin.ModelAdmin):
+    list_display= ("id","uploaded_by","file","uploaded_at")
+
+admin.site.register(WorkspaceFile,FileAdmin)
+
 
 admin.site.register(WorkPlace)
 admin.site.register(Note)

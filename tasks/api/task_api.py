@@ -14,7 +14,7 @@ def Tasks(request):
 
     company = request.user.profile.company
 
-    print("This is company",company)
+    # print("This is company",company)
 
     if request.method == "GET":
 
@@ -23,7 +23,7 @@ def Tasks(request):
             is_deleted=False
         )
 
-        print("This is tasks: ",tasks)
+        # print("This is tasks: ",tasks)
 
         serializer = TaskSerializer(tasks, many=True)
 
@@ -40,6 +40,8 @@ def Tasks(request):
             company=company,
             is_deleted=False
         )
+
+        # print("The request data: ",request.data)
 
         serializer = TaskSerializer(data=request.data)
 
@@ -73,7 +75,7 @@ def TaskManupulate(request, id):
 
     task = get_object_or_404(
         Task,
-        id=id,
+        project=id,
         project__company=company,
         is_deleted=False
     )

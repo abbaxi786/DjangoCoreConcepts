@@ -61,13 +61,14 @@ class Note(models.Model):
 
 
 class WorkspaceFile(models.Model):
-    work_place = models.CharField(max_length=100)
+    work_place = models.ForeignKey(
+        WorkPlace,
+        on_delete=models.CASCADE,
+        related_name="files"
+    )
 
     uploaded_by = models.CharField(max_length=100)
 
     file = models.FileField(upload_to="workspace_files/")
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.file.name

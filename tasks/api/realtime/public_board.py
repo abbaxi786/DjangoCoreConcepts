@@ -14,12 +14,15 @@ class BoardConsumer(AsyncWebsocketConsumer):
     online_users = {}
 
     async def connect(self):
+
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
 
         await self.channel_layer.group_add(
             self.room_name,
             self.channel_name
         )
+
+        print("CONNECTED TO:", self.room_name)
 
         await self.accept()
 
@@ -38,7 +41,9 @@ class BoardConsumer(AsyncWebsocketConsumer):
 
         message_type = data.get("type")
 
-       
+        # -------------------------
+        # USER JOINED
+        # -------------------------
         if message_type == "join":
 
             self.username = data["username"]
@@ -60,10 +65,12 @@ class BoardConsumer(AsyncWebsocketConsumer):
                 }
             )
 
-            return 
+            return
 
-       
-        if message_type == "board_update":
+        # -------------------------
+        # BOARD UPDATED
+        # -------------------------
+        elif message_type == "board_update":
 
             username = data["username"]
             board_content = data["board_content"]
@@ -79,19 +86,6 @@ class BoardConsumer(AsyncWebsocketConsumer):
                 board_content
             )
 
-        workplaces = await get_company_workplaces(self.room_name)
-
-        for workplace in workplaces:
-
-            await self.channel_layer.group_send(
-                workplace.room_name,
-                {
-                    "type": "notification",
-                    "username": username,
-                    "message": f"updated {self.room_name}"
-                }
-            )
-
             await self.channel_layer.group_send(
                 self.room_name,
                 {
@@ -105,21 +99,67 @@ class BoardConsumer(AsyncWebsocketConsumer):
                 {
                     "type": "notification",
                     "username": username,
-                    "message": "updated the board",
+                    "message": "updated the board"
                 }
             )
 
-            return
-        
-    async def notification(self, event):
+            workplaces = await get_company_workplaces(
+                self.room_name
+            )
 
-        await self.send(
-            text_data=json.dumps({
-                "type": "notification",
-                "username": event["username"],
-                "message": event["message"]
-            })
-        )
+            for workplace in workplaces:
+
+                if workplace.room_name == self.room_name:
+                    continue
+
+                await self.channel_layer.group_send(
+                    workplace.room_name,
+                    {
+                        "type": "notification",
+                        "username": username,
+                        "message": f"updated {self.room_name}"
+                    }
+                )
+
+            return
+
+       
+        elif message_type == "file_uploaded":
+
+            username = data["username"]
+
+            await self.channel_layer.group_send(
+                self.room_name,
+                {
+                    "type": "notification",
+                    "username": username,
+                    "message": "uploaded a file"
+                }
+            )
+
+            workplaces = await get_company_workplaces(
+                self.room_name
+            )
+
+            for workplace in workplaces:
+
+                if workplace.room_name == self.room_name:
+                    continue
+
+                await self.channel_layer.group_send(
+                    workplace.room_name,
+                    {
+                        "type": "notification",
+                        "username": username,
+                        "message": f"uploaded a file in {self.room_name}"
+                    }
+                )
+
+            return
+
+    # ====================================================
+    # EVENTS RECEIVED FROM group_send()
+    # ====================================================
 
     async def board_update(self, event):
 
@@ -127,6 +167,23 @@ class BoardConsumer(AsyncWebsocketConsumer):
             text_data=json.dumps({
                 "type": "board_update",
                 "board_content": event["board_content"]
+            })
+        )
+
+    async def notification(self, event):
+
+        print(
+            "Notification sent to:",
+            self.room_name,
+            event["username"],
+            event["message"]
+        )
+
+        await self.send(
+            text_data=json.dumps({
+                "type": "notification",
+                "username": event["username"],
+                "message": event["message"]
             })
         )
 

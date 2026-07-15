@@ -2,14 +2,17 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from .fetch_message import get_last_messages,save_message
+# from rest_framework.permissions import IsAuthenticated
+# from rest_framework.decorators import permission_classes
 
+# @permission_classes([IsAuthenticated])
 class ChatConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         print("1. connect() called")
 
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        print("2. Adding to group")
+        
         await self.channel_layer.group_add(
         self.room_name,
         self.channel_name
